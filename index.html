@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitor Ambiental ESP32</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🌡️ Sistema de Monitoreo Ambiental</h1>
+      <p id="last-update">Última actualización: --</p>
+    </header>
+
+    <main class="container">
+      <!-- Panel izquierdo: Datos de sensores -->
+      <section class="panel panel-sensors">
+        <h2>📊 Datos en Tiempo Real</h2>
+
+        <div class="sensor-grid">
+          <div class="sensor-card" id="temp-card">
+            <div class="sensor-icon">🌡️</div>
+            <div class="sensor-data">
+              <span class="sensor-value" id="temperature">--</span>
+              <span class="sensor-unit">°C</span>
+            </div>
+            <div class="sensor-label">Temperatura</div>
+            <div class="sensor-status" id="temp-status">Normal</div>
+          </div>
+
+          <div class="sensor-card" id="hum-card">
+            <div class="sensor-icon">💧</div>
+            <div class="sensor-data">
+              <span class="sensor-value" id="humidity">--</span>
+              <span class="sensor-unit">%</span>
+            </div>
+            <div class="sensor-label">Humedad</div>
+            <div class="sensor-status" id="hum-status">Normal</div>
+          </div>
+
+          <div class="sensor-card" id="co2-card">
+            <div class="sensor-icon">🌫️</div>
+            <div class="sensor-data">
+              <span class="sensor-value" id="co2">--</span>
+              <span class="sensor-unit">ppm</span>
+            </div>
+            <div class="sensor-label">CO₂</div>
+            <div class="sensor-status" id="co2-status">Normal</div>
+          </div>
+
+          <div class="sensor-card" id="tvoc-card">
+            <div class="sensor-icon">🏭</div>
+            <div class="sensor-data">
+              <span class="sensor-value" id="tvoc">--</span>
+              <span class="sensor-unit">ppb</span>
+            </div>
+            <div class="sensor-label">TVOC</div>
+            <div class="sensor-status" id="tvoc-status">Normal</div>
+          </div>
+
+          <div class="sensor-card" id="pressure-card">
+            <div class="sensor-icon">🔽</div>
+            <div class="sensor-data">
+              <span class="sensor-value" id="pressure">--</span>
+              <span class="sensor-unit">hPa</span>
+            </div>
+            <div class="sensor-label">Presión</div>
+          </div>
+
+          <div class="sensor-card" id="fan-card">
+            <div class="sensor-icon">🌀</div>
+            <div class="sensor-data">
+              <span class="sensor-value" id="fan-status">OFF</span>
+            </div>
+            <div class="sensor-label">Ventilador</div>
+          </div>
+        </div>
+
+        <!-- Gráfica histórica -->
+        <div class="chart-container">
+          <h3>📈 Historial (últimas 24 horas)</h3>
+          <canvas id="historyChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Panel derecho: Clima de la ciudad -->
+      <section class="panel panel-weather">
+        <h2>🌍 Clima Exterior</h2>
+        <div id="weather-loading">Cargando datos del clima...</div>
+        <div id="weather-content" style="display: none">
+          <div class="weather-header">
+            <h3 id="city-name">--</h3>
+            <p id="weather-date">--</p>
+          </div>
+
+          <div class="weather-main">
+            <img id="weather-icon" src="" alt="clima" />
+            <div class="weather-temp">
+              <span id="weather-temp-value">--</span>
+              <span class="weather-unit">°C</span>
+            </div>
+            <p id="weather-description">--</p>
+          </div>
+
+          <div class="weather-details">
+            <div class="weather-item">
+              <span class="weather-label">Sensación térmica:</span>
+              <span id="feels-like">--</span>°C
+            </div>
+            <div class="weather-item">
+              <span class="weather-label">Humedad:</span>
+              <span id="weather-humidity">--</span>%
+            </div>
+            <div class="weather-item">
+              <span class="weather-label">Viento:</span>
+              <span id="wind-speed">--</span> km/h
+            </div>
+            <div class="weather-item">
+              <span class="weather-label">Presión:</span>
+              <span id="weather-pressure">--</span> hPa
+            </div>
+          </div>
+
+          <div class="weather-minmax">
+            <div>
+              <span>⬆️ Máx:</span>
+              <strong id="temp-max">--</strong>°C
+            </div>
+            <div>
+              <span>⬇️ Mín:</span>
+              <strong id="temp-min">--</strong>°C
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Sistema desarrollado con ESP32-S3 | Sensores: BME280 & SGP30 | Firebase
+        Realtime Database
+      </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
